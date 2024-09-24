@@ -1,7 +1,5 @@
 package com.yuch.listanime.core.data
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.map
 import com.yuch.listanime.core.data.source.local.LocalDataSource
 import com.yuch.listanime.core.data.source.remote.RemoteDataSource
 import com.yuch.listanime.core.data.source.remote.network.ApiResponse
@@ -10,6 +8,7 @@ import com.yuch.listanime.core.domain.model.Anime
 import com.yuch.listanime.core.domain.repository.IAnimeRepository
 import com.yuch.listanime.core.utils.AppExecutors
 import com.yuch.listanime.core.utils.DataMapper
+import io.reactivex.rxjava3.core.Flowable
 
 class AnimeRepository private constructor(
     private val remoteDataSource: RemoteDataSource,
@@ -29,15 +28,15 @@ class AnimeRepository private constructor(
         }
     }
 
-    override fun getTopAnime(): LiveData<Resource<List<Anime>>> =
-        object : NetworkBoundResource<List<Anime>, List<AnimeResponse>>(appExecutors) {
-            override fun loadFromDB(): LiveData<List<Anime>> {
+    override fun getTopAnime(): Flowable<Resource<List<Anime>>> =
+        object : NetworkBoundResource<List<Anime>, List<AnimeResponse>>() {
+            override fun loadFromDB(): Flowable<List<Anime>> {
                 return localDataSource.getTopAnime().map {
                     DataMapper.mapEntitiesToDomain(it)
                 }
             }
 
-            override fun createCall(): LiveData<ApiResponse<List<AnimeResponse>>> =
+            override fun createCall(): Flowable<ApiResponse<List<AnimeResponse>>> =
                 remoteDataSource.getTopAnime()
 
             override fun saveCallResult(data: List<AnimeResponse>) {
@@ -47,9 +46,9 @@ class AnimeRepository private constructor(
 
             override fun shouldFetch(data: List<Anime>?): Boolean =
                 true
-        }.asLiveData()
+        }.asFlowable()
 
-    override fun getFavoriteAnime(): LiveData<List<Anime>> {
+    override fun getFavoriteAnime(): Flowable<List<Anime>> {
         return localDataSource.getFavoriteAnime().map {
             DataMapper.mapEntitiesToDomain(it)
         }

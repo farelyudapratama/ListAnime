@@ -1,45 +1,45 @@
 package com.yuch.listanime.core.data.source.remote
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import android.annotation.SuppressLint
+import android.util.Log
 import com.yuch.listanime.core.data.source.remote.network.ApiResponse
 import com.yuch.listanime.core.data.source.remote.network.ApiService
 import com.yuch.listanime.core.data.source.remote.response.AnimeResponse
-import com.yuch.listanime.core.data.source.remote.response.TopAnimeResponse
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.BackpressureStrategy
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.schedulers.Schedulers
+import io.reactivex.rxjava3.subjects.PublishSubject
 
-class RemoteDataSource private constructor(private val apiService: ApiService){
+class RemoteDataSource private constructor(private val apiService: ApiService) {
     companion object {
         @Volatile
-        private var instace: RemoteDataSource? = null
+        private var instance: RemoteDataSource? = null
 
         fun getInstance(service: ApiService): RemoteDataSource =
-            instace ?: synchronized(this) {
-                instace ?: RemoteDataSource(service)
+            instance ?: synchronized(this) {
+                instance ?: RemoteDataSource(service)
             }
     }
 
-    fun getTopAnime(): LiveData<ApiResponse<List<AnimeResponse>>>{
-        val result = MutableLiveData<ApiResponse<List<AnimeResponse>>>()
+    @SuppressLint("CheckResult")
+    fun getTopAnime(): Flowable<ApiResponse<List<AnimeResponse>>> {
+        val resultData = PublishSubject.create<ApiResponse<List<AnimeResponse>>>()
 
         val client = apiService.getTopAnime()
 
-        client.enqueue(object : Callback<TopAnimeResponse> {
-            override fun onResponse(
-                call: Call<TopAnimeResponse>,
-                response: Response<TopAnimeResponse>
-            ) {
-                val dataArray = response.body()?.data?.filterNotNull()
-                result.value = if (dataArray != null) ApiResponse.Success(dataArray) else ApiResponse.Empty
-            }
+        client
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .take(1)
+            .subscribe({ response ->
+                val dataArray = response.data?.filterNotNull() ?: emptyList()
+                resultData.onNext(if (dataArray.isNotEmpty()) ApiResponse.Success(dataArray) else ApiResponse.Empty)
+            }, { error ->
+                resultData.onNext(ApiResponse.Error(error.message.toString()))
+                Log.e("RemoteDataSource", error.toString())
+            })
 
-            override fun onFailure(call: Call<TopAnimeResponse>, t: Throwable) {
-                result.value = ApiResponse.Error(t.message.toString())
-            }
-        })
-
-        return result
+        return resultData.toFlowable(BackpressureStrategy.BUFFER)
     }
 }
