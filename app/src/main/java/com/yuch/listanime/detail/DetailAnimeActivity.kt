@@ -9,25 +9,19 @@ import com.bumptech.glide.Glide
 import com.yuch.listanime.MyApplication
 import com.yuch.listanime.R
 import com.yuch.listanime.core.domain.model.Anime
-import com.yuch.listanime.core.ui.ViewModelFactory
 import com.yuch.listanime.core.utils.formatDate
 import com.yuch.listanime.core.utils.formatNumberWithLocale
 import com.yuch.listanime.databinding.ActivityDetailAnimeBinding
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DetailAnimeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailAnimeBinding
 //    private lateinit var detailAnimeViewModel: DetailAnimeViewModel
 
-    @Inject
-    lateinit var factory: ViewModelFactory
-
-    private val detailAnimeViewModel: DetailAnimeViewModel by viewModels {
-        factory
-    }
+    private val detailAnimeViewModel: DetailAnimeViewModel by viewModels ()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        (application as MyApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
         binding = ActivityDetailAnimeBinding.inflate(layoutInflater)
         setContentView(binding.root)

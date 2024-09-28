@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     id("com.google.devtools.ksp")
     id("kotlin-parcelize")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -77,6 +78,10 @@ dependencies {
     implementation(libs.androidx.lifecycle.reactivestreams.ktx)
 
     // Dagger
-    implementation("com.google.dagger:dagger:2.52")
-    ksp("com.google.dagger:dagger-compiler:2.52")
+//    implementation("com.google.dagger:dagger:2.52")
+//    ksp("com.google.dagger:dagger-compiler:2.52")
+
+    // Dagger Hilt
+    implementation("com.google.dagger:hilt-android:2.48.1")
+    ksp("com.google.dagger:hilt-android-compiler:2.48.1")
 }

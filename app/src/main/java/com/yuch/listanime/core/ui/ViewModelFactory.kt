@@ -2,15 +2,12 @@ package com.yuch.listanime.core.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.yuch.listanime.core.domain.usecase.AnimeUseCase
-import com.yuch.listanime.detail.DetailAnimeViewModel
-import com.yuch.listanime.di.AppScope
-import com.yuch.listanime.favorite.FavoriteViewModel
-import com.yuch.listanime.home.HomeViewModel
 import javax.inject.Inject
+import javax.inject.Provider
 
-@AppScope
-class ViewModelFactory @Inject constructor(private val animeUseCase: AnimeUseCase): ViewModelProvider.Factory {
+class ViewModelFactory @Inject constructor(
+    private val creators: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>
+) : ViewModelProvider.Factory {
 
 //    companion object {
 //        @Volatile
@@ -25,18 +22,10 @@ class ViewModelFactory @Inject constructor(private val animeUseCase: AnimeUseCas
 //    }
 
     @Suppress("UNCHECKED_CAST")
-    override fun <T : ViewModel> create(modelClass: Class<T>): T =
-        when {
-            modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
-                HomeViewModel(animeUseCase) as T
-            }
-            modelClass.isAssignableFrom(DetailAnimeViewModel::class.java) -> {
-                DetailAnimeViewModel(animeUseCase) as T
-            }
-            modelClass.isAssignableFrom(FavoriteViewModel::class.java) -> {
-                FavoriteViewModel(animeUseCase) as T
-            }
-
-            else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
-        }
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        val creator = creators[modelClass] ?: creators.entries.firstOrNull {
+            modelClass.isAssignableFrom(it.key)
+        }?.value ?: throw IllegalArgumentException("unknown model class $modelClass")
+        return creator.get() as T
+    }
 }
