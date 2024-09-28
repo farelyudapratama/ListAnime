@@ -3,15 +3,18 @@ package com.yuch.listanime.core.data.source.local
 import com.yuch.listanime.core.data.source.local.entity.AnimeEntity
 import com.yuch.listanime.core.data.source.local.room.AnimeDao
 import io.reactivex.rxjava3.core.Flowable
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class LocalDataSource private constructor(private val animeDao: AnimeDao){
-    companion object {
-        private var instance: LocalDataSource? = null
-        fun getInstance(animeDao: AnimeDao): LocalDataSource =
-            instance ?: synchronized(this) {
-                instance ?: LocalDataSource(animeDao)
-            }
-    }
+@Singleton
+class LocalDataSource @Inject constructor(private val animeDao: AnimeDao){
+//    companion object {
+//        private var instance: LocalDataSource? = null
+//        fun getInstance(animeDao: AnimeDao): LocalDataSource =
+//            instance ?: synchronized(this) {
+//                instance ?: LocalDataSource(animeDao)
+//            }
+//    }
     fun getTopAnime(): Flowable<List<AnimeEntity>> = animeDao.getTopAnime()
 
     fun getFavoriteAnime(): Flowable<List<AnimeEntity>> = animeDao.getFavoriteAnime()

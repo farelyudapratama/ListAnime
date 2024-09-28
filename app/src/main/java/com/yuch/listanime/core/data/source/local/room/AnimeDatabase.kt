@@ -10,21 +10,21 @@ import com.yuch.listanime.core.data.source.local.entity.AnimeEntity
 abstract class AnimeDatabase : RoomDatabase() {
     abstract fun animeDao(): AnimeDao
 
-    companion object {
-        @Volatile
-        private var INSTANCE: AnimeDatabase? = null
-
-        fun getInstance(context: Context): AnimeDatabase =
-            INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    AnimeDatabase::class.java,
-                    "Anime.db"
-                )
-                    .fallbackToDestructiveMigration()
-                    .build()
-                INSTANCE = instance
-                instance
-            }
-    }
+//    companion object {
+//        @Volatile
+//        private var INSTANCE: AnimeDatabase? = null
+//
+//        fun getInstance(context: Context): AnimeDatabase =
+//            INSTANCE ?: synchronized(this) {
+//                val instance = Room.databaseBuilder(
+//                    context.applicationContext,
+//                    AnimeDatabase::class.java,
+//                    "Anime.db"
+//                )
+//                    .fallbackToDestructiveMigration()
+//                    .build()
+//                INSTANCE = instance
+//                instance
+//            }
+//    }
 }

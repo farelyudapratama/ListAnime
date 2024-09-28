@@ -2,30 +2,40 @@ package com.yuch.listanime.detail
 
 import android.os.Build
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.yuch.listanime.MyApplication
 import com.yuch.listanime.R
 import com.yuch.listanime.core.domain.model.Anime
 import com.yuch.listanime.core.ui.ViewModelFactory
 import com.yuch.listanime.core.utils.formatDate
 import com.yuch.listanime.core.utils.formatNumberWithLocale
 import com.yuch.listanime.databinding.ActivityDetailAnimeBinding
+import javax.inject.Inject
 
 class DetailAnimeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailAnimeBinding
-    private lateinit var detailAnimeViewModel: DetailAnimeViewModel
+//    private lateinit var detailAnimeViewModel: DetailAnimeViewModel
+
+    @Inject
+    lateinit var factory: ViewModelFactory
+
+    private val detailAnimeViewModel: DetailAnimeViewModel by viewModels {
+        factory
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        (application as MyApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
         binding = ActivityDetailAnimeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
 //        setSupportActionBar(binding.toolbar)
 
-        val factory = ViewModelFactory.getInstance(this)
-        detailAnimeViewModel = ViewModelProvider(this, factory)[DetailAnimeViewModel::class.java]
+//        val factory = ViewModelFactory.getInstance(this)
+//        detailAnimeViewModel = ViewModelProvider(this, factory)[DetailAnimeViewModel::class.java]
 
         val detailAnime = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableExtra(EXTRA_DATA, Anime::class.java)

@@ -3,8 +3,6 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     id("com.google.devtools.ksp")
     id("kotlin-parcelize")
-    id("kotlin-kapt")
-    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -40,9 +38,6 @@ android {
     buildFeatures {
         viewBinding = true
     }
-}
-kapt {
-    correctErrorTypes = true
 }
 dependencies {
 
@@ -81,7 +76,7 @@ dependencies {
     implementation(libs.androidx.room.rxjava3)
     implementation(libs.androidx.lifecycle.reactivestreams.ktx)
 
-    // Hilt
-    implementation("com.google.dagger:hilt-android:2.44")
-    kapt("com.google.dagger:hilt-android-compiler:2.44")
+    // Dagger
+    implementation("com.google.dagger:dagger:2.52")
+    ksp("com.google.dagger:dagger-compiler:2.52")
 }

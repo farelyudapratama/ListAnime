@@ -9,24 +9,27 @@ import com.yuch.listanime.core.domain.repository.IAnimeRepository
 import com.yuch.listanime.core.utils.AppExecutors
 import com.yuch.listanime.core.utils.DataMapper
 import io.reactivex.rxjava3.core.Flowable
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class AnimeRepository private constructor(
+@Singleton
+class AnimeRepository @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource,
     private val appExecutors: AppExecutors
 ): IAnimeRepository {
 
-        companion object {
-        @Volatile
-        private var instance: AnimeRepository? = null
-        fun getInstance(
-            remoteData: RemoteDataSource,
-            localData: LocalDataSource,
-            appExecutors: AppExecutors
-        ): AnimeRepository = instance ?: synchronized(this) {
-            instance ?: AnimeRepository(remoteData, localData, appExecutors)
-        }
-    }
+//    companion object {
+//        @Volatile
+//        private var instance: AnimeRepository? = null
+//        fun getInstance(
+//            remoteData: RemoteDataSource,
+//            localData: LocalDataSource,
+//            appExecutors: AppExecutors
+//        ): AnimeRepository = instance ?: synchronized(this) {
+//            instance ?: AnimeRepository(remoteData, localData, appExecutors)
+//        }
+//    }
 
     override fun getTopAnime(): Flowable<Resource<List<Anime>>> =
         object : NetworkBoundResource<List<Anime>, List<AnimeResponse>>() {
