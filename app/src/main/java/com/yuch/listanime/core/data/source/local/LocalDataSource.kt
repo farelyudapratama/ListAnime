@@ -4,14 +4,14 @@ import com.yuch.listanime.core.data.source.local.entity.AnimeEntity
 import com.yuch.listanime.core.data.source.local.room.AnimeDao
 import kotlinx.coroutines.flow.Flow
 
-class LocalDataSource private constructor(private val animeDao: AnimeDao){
-    companion object {
-        private var instance: LocalDataSource? = null
-        fun getInstance(animeDao: AnimeDao): LocalDataSource =
-            instance ?: synchronized(this) {
-                instance ?: LocalDataSource(animeDao)
-            }
-    }
+class LocalDataSource(private val animeDao: AnimeDao){
+//    companion object {
+//        private var instance: LocalDataSource? = null
+//        fun getInstance(animeDao: AnimeDao): LocalDataSource =
+//            instance ?: synchronized(this) {
+//                instance ?: LocalDataSource(animeDao)
+//            }
+//    }
     fun getTopAnime(): Flow<List<AnimeEntity>> = animeDao.getTopAnime()
 
     fun getFavoriteAnime(): Flow<List<AnimeEntity>> = animeDao.getFavoriteAnime()
