@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yuch.listanime.R
-import com.yuch.listanime.core.data.Resource
+import com.yuch.listanime.core.Resource
 import com.yuch.listanime.core.ui.AnimeAdapter
 import com.yuch.listanime.databinding.FragmentHomeBinding
 import com.yuch.listanime.detail.DetailAnimeActivity
@@ -47,12 +47,12 @@ class HomeFragment : Fragment() {
             homeViewModel.anime.observe(viewLifecycleOwner) { anime ->
                 if (anime != null) {
                     when (anime) {
-                        is Resource.Loading -> binding.progressBar.visibility = View.VISIBLE
-                        is Resource.Success -> {
+                        is com.yuch.listanime.core.Resource.Loading -> binding.progressBar.visibility = View.VISIBLE
+                        is com.yuch.listanime.core.Resource.Success -> {
                             binding.progressBar.visibility = View.GONE
                             animeAdapter.submitList(anime.data)
                         }
-                        is Resource.Error -> {
+                        is com.yuch.listanime.core.Resource.Error -> {
                             binding.progressBar.visibility = View.GONE
                             binding.viewError.root.visibility = View.VISIBLE
                             binding.viewError.tvError.text = anime.message ?: getString(R.string.something_wrong)

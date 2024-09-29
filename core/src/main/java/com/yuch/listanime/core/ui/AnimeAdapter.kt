@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.yuch.listanime.core.domain.model.Anime
-import com.yuch.listanime.databinding.ItemAnimeBinding
+import com.yuch.listanime.core.databinding.ItemAnimeBinding
 
 class AnimeAdapter : ListAdapter<Anime, AnimeAdapter.ListViewHolder>(DIFF_CALLBACK) {
 

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="image_description">Image</string>
+    <string name="text_primary">Sample Title</string>
+    <string name="text_episode">TV (10 eps)</string>
+</resources>

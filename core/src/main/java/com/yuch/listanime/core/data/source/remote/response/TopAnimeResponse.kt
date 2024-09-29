@@ -4,10 +4,10 @@ import com.google.gson.annotations.SerializedName
 
 data class ListAnimeResponse(
 
-	@field:SerializedName("pagination")
+    @field:SerializedName("pagination")
 	val pagination: Pagination? = null,
 
-	@field:SerializedName("data")
+    @field:SerializedName("data")
 	val data: List<AnimeResponse?>? = null
 )
 

@@ -1,7 +1,7 @@
 package com.yuch.listanime.core.di
 
 import androidx.room.Room
-import com.yuch.listanime.core.data.AnimeRepository
+import com.yuch.listanime.core.AnimeRepository
 import com.yuch.listanime.core.data.source.local.LocalDataSource
 import com.yuch.listanime.core.data.source.local.room.AnimeDatabase
 import com.yuch.listanime.core.data.source.remote.RemoteDataSource
