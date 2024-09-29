@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.yuch.listanime.core.data.source.remote.network.ApiResponse
 import com.yuch.listanime.core.data.source.remote.network.ApiService
 import com.yuch.listanime.core.data.source.remote.response.AnimeResponse
-import com.yuch.listanime.core.data.source.remote.response.TopAnimeResponse
+import com.yuch.listanime.core.data.source.remote.response.ListAnimeResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,16 +26,16 @@ class RemoteDataSource private constructor(private val apiService: ApiService){
 
         val client = apiService.getTopAnime()
 
-        client.enqueue(object : Callback<TopAnimeResponse> {
+        client.enqueue(object : Callback<ListAnimeResponse> {
             override fun onResponse(
-                call: Call<TopAnimeResponse>,
-                response: Response<TopAnimeResponse>
+                call: Call<ListAnimeResponse>,
+                response: Response<ListAnimeResponse>
             ) {
                 val dataArray = response.body()?.data?.filterNotNull()
                 result.value = if (dataArray != null) ApiResponse.Success(dataArray) else ApiResponse.Empty
             }
 
-            override fun onFailure(call: Call<TopAnimeResponse>, t: Throwable) {
+            override fun onFailure(call: Call<ListAnimeResponse>, t: Throwable) {
                 result.value = ApiResponse.Error(t.message.toString())
             }
         })

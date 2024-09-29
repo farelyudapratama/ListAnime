@@ -2,7 +2,7 @@ package com.yuch.listanime.core.data.source.remote.response
 
 import com.google.gson.annotations.SerializedName
 
-data class TopAnimeResponse(
+data class ListAnimeResponse(
 
 	@field:SerializedName("pagination")
 	val pagination: Pagination? = null,
