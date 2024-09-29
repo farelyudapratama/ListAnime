@@ -1,14 +1,13 @@
 package com.yuch.listanime.core.data.source.remote
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import android.util.Log
 import com.yuch.listanime.core.data.source.remote.network.ApiResponse
 import com.yuch.listanime.core.data.source.remote.network.ApiService
 import com.yuch.listanime.core.data.source.remote.response.AnimeResponse
-import com.yuch.listanime.core.data.source.remote.response.ListAnimeResponse
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
 class RemoteDataSource private constructor(private val apiService: ApiService){
     companion object {
@@ -21,25 +20,21 @@ class RemoteDataSource private constructor(private val apiService: ApiService){
             }
     }
 
-    fun getTopAnime(): LiveData<ApiResponse<List<AnimeResponse>>>{
-        val result = MutableLiveData<ApiResponse<List<AnimeResponse>>>()
+    suspend fun getTopAnime(): Flow<ApiResponse<List<AnimeResponse>>> {
+        return flow {
+            try {
+                val response = apiService.getTopAnime()
+                val dataArray = response.data?.filterNotNull()
 
-        val client = apiService.getTopAnime()
-
-        client.enqueue(object : Callback<ListAnimeResponse> {
-            override fun onResponse(
-                call: Call<ListAnimeResponse>,
-                response: Response<ListAnimeResponse>
-            ) {
-                val dataArray = response.body()?.data?.filterNotNull()
-                result.value = if (dataArray != null) ApiResponse.Success(dataArray) else ApiResponse.Empty
+                if (dataArray?.isNotEmpty() == true) {
+                    emit(ApiResponse.Success(dataArray))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+                Log.e("RemoteDataSource", e.toString())
             }
-
-            override fun onFailure(call: Call<ListAnimeResponse>, t: Throwable) {
-                result.value = ApiResponse.Error(t.message.toString())
-            }
-        })
-
-        return result
+        }.flowOn(Dispatchers.IO)
     }
 }

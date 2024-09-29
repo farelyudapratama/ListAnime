@@ -1,11 +1,11 @@
 package com.yuch.listanime.core.domain.repository
 
-import androidx.lifecycle.LiveData
 import com.yuch.listanime.core.data.Resource
 import com.yuch.listanime.core.domain.model.Anime
+import kotlinx.coroutines.flow.Flow
 
 interface IAnimeRepository {
-    fun getTopAnime(): LiveData<Resource<List<Anime>>>
-    fun getFavoriteAnime(): LiveData<List<Anime>>
+    fun getTopAnime(): Flow<Resource<List<Anime>>>
+    fun getFavoriteAnime(): Flow<List<Anime>>
     fun setFavoriteAnime(anime: Anime, state: Boolean)
 }

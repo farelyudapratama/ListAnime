@@ -1,8 +1,8 @@
 package com.yuch.listanime.core.data.source.local
 
-import androidx.lifecycle.LiveData
 import com.yuch.listanime.core.data.source.local.entity.AnimeEntity
 import com.yuch.listanime.core.data.source.local.room.AnimeDao
+import kotlinx.coroutines.flow.Flow
 
 class LocalDataSource private constructor(private val animeDao: AnimeDao){
     companion object {
@@ -12,11 +12,11 @@ class LocalDataSource private constructor(private val animeDao: AnimeDao){
                 instance ?: LocalDataSource(animeDao)
             }
     }
-    fun getTopAnime(): LiveData<List<AnimeEntity>> = animeDao.getTopAnime()
+    fun getTopAnime(): Flow<List<AnimeEntity>> = animeDao.getTopAnime()
 
-    fun getFavoriteAnime(): LiveData<List<AnimeEntity>> = animeDao.getFavoriteAnime()
+    fun getFavoriteAnime(): Flow<List<AnimeEntity>> = animeDao.getFavoriteAnime()
 
-    fun insertAnime(animeList: List<AnimeEntity>) = animeDao.insertAnime(animeList)
+    suspend fun insertAnime(animeList: List<AnimeEntity>) = animeDao.insertAnime(animeList)
 
     fun setFavoriteAnime(anime: AnimeEntity, newState: Boolean) {
         anime.isFavorite = newState
