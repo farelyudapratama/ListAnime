@@ -9,6 +9,7 @@ import com.yuch.listanime.core.data.source.remote.response.AnimeResponse
 import com.yuch.listanime.core.utils.AppExecutors
 import com.yuch.listanime.core.utils.DataMapper
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
 class AnimeRepository(
@@ -29,8 +30,8 @@ class AnimeRepository(
 //        }
 //    }
 
-    override fun getTopAnime(): Flow<com.yuch.listanime.core.Resource<List<Anime>>> =
-        object : com.yuch.listanime.core.NetworkBoundResource<List<Anime>, List<AnimeResponse>>(appExecutors) {
+    override fun getTopAnime(): Flow<Resource<List<Anime>>> =
+        object : NetworkBoundResource<List<Anime>, List<AnimeResponse>>(appExecutors) {
             override fun loadFromDB(): Flow<List<Anime>> {
                 return localDataSource.getTopAnime().map {
                     DataMapper.mapEntitiesToDomain(it)
@@ -42,11 +43,17 @@ class AnimeRepository(
 
             override suspend fun saveCallResult(data: List<AnimeResponse>) {
                 val animeList = DataMapper.mapResponsesToEntities(data)
-                localDataSource.insertAnime(animeList)
+                val currentFavorites = localDataSource.getFavoriteAnime().first()
+
+                val updatedAnimeList = animeList.map { animeEntity ->
+                    val isFavorite = currentFavorites.find { it.malId == animeEntity.malId }?.isFavorite ?: false
+                    animeEntity.isFavorite = isFavorite
+                    animeEntity
+                }
+                localDataSource.insertAnime(updatedAnimeList)
             }
 
-            override fun shouldFetch(data: List<Anime>?): Boolean =
-                true
+            override fun shouldFetch(data: List<Anime>?): Boolean = true
         }.asFlow()
 
     override fun getFavoriteAnime(): Flow<List<Anime>> {
@@ -59,4 +66,5 @@ class AnimeRepository(
         val animeEntity = DataMapper.mapDomainToEntity(anime)
         appExecutors.diskIO().execute { localDataSource.setFavoriteAnime(animeEntity, state) }
     }
+
 }

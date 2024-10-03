@@ -67,7 +67,7 @@ object DataMapper {
                 genre = it.genre,
                 theme = it.theme,
                 demographics = it.demographics,
-                isFavorite = false
+                isFavorite = it.isFavorite
             )
         }
 
@@ -96,6 +96,6 @@ object DataMapper {
         genre = input.genre,
         theme = input.theme,
         demographics = input.demographics,
-        isFavorite = false
+        isFavorite = input.isFavorite
     )
 }

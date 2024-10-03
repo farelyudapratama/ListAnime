@@ -25,26 +25,28 @@ class AnimeAdapter : ListAdapter<Anime, AnimeAdapter.ListViewHolder>(DIFF_CALLBA
 
     inner class ListViewHolder(private val binding: ItemAnimeBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(data: Anime) {
-            val type = data.type
-            val eps = data.episodes
-
             with(binding) {
-                Glide.with(itemView.context)
-                    .load(data.imageUrl)
-                    .into(ivItemImage)
+                loadImage(data.imageUrl)
+
                 tvItemTitle.text = data.title
-                if (eps != null) {
-                    val animeInfo = "$type ($eps Episode)"
-                    tvItemEpisode.text = animeInfo
-                } else {
-                    val animeInfo = "$type (? Episode)"
-                    tvItemEpisode.text = animeInfo
+
+                tvItemEpisode.text = formatAnimeInfo(data.type, data.episodes)
+
+                itemView.setOnClickListener {
+                    onItemClick?.invoke(data)
                 }
             }
+        }
 
-            itemView.setOnClickListener {
-                onItemClick?.invoke(data)
-            }
+        private fun loadImage(imageUrl: String?) {
+            Glide.with(itemView.context)
+                .load(imageUrl)
+                .into(binding.ivItemImage)
+        }
+
+        private fun formatAnimeInfo(type: String?, episodes: Int?): String {
+            val epsInfo = if (episodes != null) "$episodes Episode" else "? Episode"
+            return "$type ($epsInfo)"
         }
     }
 

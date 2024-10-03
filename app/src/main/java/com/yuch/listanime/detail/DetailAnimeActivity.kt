@@ -2,6 +2,7 @@ package com.yuch.listanime.detail
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
@@ -47,6 +48,8 @@ class DetailAnimeActivity : AppCompatActivity() {
 
                 var statusFavorite: Boolean = detailAnime.isFavorite
                 setStatusFavorite(statusFavorite)
+                Log.d("DetailAnimeActivity", "Setting favorite: ${detailAnime.title}, state: $statusFavorite")
+
                 fab.setOnClickListener {
                     statusFavorite = !statusFavorite
                     detailAnimeViewModel.setFavoriteAnime(detailAnime, statusFavorite)
