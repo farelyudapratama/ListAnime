@@ -49,4 +49,6 @@ android {
 dependencies {
 
     implementation(project(":core"))
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
 }
