@@ -72,4 +72,11 @@ dependencies {
 
     //Koin
     api(libs.koin.android)
+
+    // LeakCanary
+    debugImplementation(libs.leakcanary.android)
+
+    // Encryption
+    implementation(libs.android.database.sqlcipher)
+    implementation(libs.androidx.sqlite.ktx)
 }

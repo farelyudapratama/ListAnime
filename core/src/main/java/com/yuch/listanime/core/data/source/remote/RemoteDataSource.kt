@@ -26,15 +26,16 @@ class RemoteDataSource(private val apiService: ApiService){
                 val response = apiService.getTopAnime()
                 val dataArray = response.data?.filterNotNull()
 
-                if (dataArray?.isNotEmpty() == true) {
+                if (!dataArray.isNullOrEmpty()) {
                     emit(ApiResponse.Success(dataArray))
                 } else {
                     emit(ApiResponse.Empty)
                 }
             } catch (e: Exception) {
                 emit(ApiResponse.Error(e.toString()))
-                Log.e("RemoteDataSource", e.toString())
+                Log.e("RemoteDataSource", "Error: ${e.message}")
             }
         }.flowOn(Dispatchers.IO)
     }
+
 }
