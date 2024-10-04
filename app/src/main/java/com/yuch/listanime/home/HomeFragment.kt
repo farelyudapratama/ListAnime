@@ -47,12 +47,12 @@ class HomeFragment : Fragment() {
             homeViewModel.anime.observe(viewLifecycleOwner) { anime ->
                 if (anime != null) {
                     when (anime) {
-                        is com.yuch.listanime.core.Resource.Loading -> binding.progressBar.visibility = View.VISIBLE
-                        is com.yuch.listanime.core.Resource.Success -> {
+                        is Resource.Loading -> binding.progressBar.visibility = View.VISIBLE
+                        is Resource.Success -> {
                             binding.progressBar.visibility = View.GONE
                             animeAdapter.submitList(anime.data)
                         }
-                        is com.yuch.listanime.core.Resource.Error -> {
+                        is Resource.Error -> {
                             binding.progressBar.visibility = View.GONE
                             binding.viewError.root.visibility = View.VISIBLE
                             binding.viewError.tvError.text = anime.message ?: getString(R.string.something_wrong)

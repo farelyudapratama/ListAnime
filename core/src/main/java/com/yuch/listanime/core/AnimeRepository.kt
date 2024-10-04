@@ -18,18 +18,6 @@ class AnimeRepository(
     private val appExecutors: AppExecutors
 ): IAnimeRepository {
 
-//        companion object {
-//        @Volatile
-//        private var instance: AnimeRepository? = null
-//        fun getInstance(
-//            remoteData: RemoteDataSource,
-//            localData: LocalDataSource,
-//            appExecutors: AppExecutors
-//        ): AnimeRepository = instance ?: synchronized(this) {
-//            instance ?: AnimeRepository(remoteData, localData, appExecutors)
-//        }
-//    }
-
     override fun getTopAnime(): Flow<Resource<List<Anime>>> =
         object : NetworkBoundResource<List<Anime>, List<AnimeResponse>>(appExecutors) {
             override fun loadFromDB(): Flow<List<Anime>> {

@@ -1,7 +1,5 @@
 package com.yuch.listanime.core.domain.usecase
 
-import androidx.lifecycle.LiveData
-import com.yuch.listanime.core.Resource
 import com.yuch.listanime.core.domain.model.Anime
 import com.yuch.listanime.core.domain.repository.IAnimeRepository
 

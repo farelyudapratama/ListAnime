@@ -10,15 +10,6 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
 class RemoteDataSource(private val apiService: ApiService){
-//    companion object {
-//        @Volatile
-//        private var instace: RemoteDataSource? = null
-//
-//        fun getInstance(service: ApiService): RemoteDataSource =
-//            instace ?: synchronized(this) {
-//                instace ?: RemoteDataSource(service)
-//            }
-//    }
 
     suspend fun getTopAnime(): Flow<ApiResponse<List<AnimeResponse>>> {
         return flow {
