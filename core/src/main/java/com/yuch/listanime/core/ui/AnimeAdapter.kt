@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.yuch.listanime.core.domain.model.Anime
 import com.yuch.listanime.core.databinding.ItemAnimeBinding
+import com.yuch.listanime.core.domain.model.Anime
 
 class AnimeAdapter : ListAdapter<Anime, AnimeAdapter.ListViewHolder>(DIFF_CALLBACK) {
 
@@ -25,16 +25,13 @@ class AnimeAdapter : ListAdapter<Anime, AnimeAdapter.ListViewHolder>(DIFF_CALLBA
 
     inner class ListViewHolder(private val binding: ItemAnimeBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(data: Anime) {
+            loadImage(data.imageUrl)
             with(binding) {
-                loadImage(data.imageUrl)
-
                 tvItemTitle.text = data.title
-
                 tvItemEpisode.text = formatAnimeInfo(data.type, data.episodes)
-
-                itemView.setOnClickListener {
-                    onItemClick?.invoke(data)
-                }
+            }
+            itemView.setOnClickListener {
+                onItemClick?.invoke(data)
             }
         }
 

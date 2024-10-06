@@ -3,8 +3,6 @@ package com.yuch.listanime
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.Menu
-import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -13,6 +11,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.navigation.NavigationView
 import com.yuch.listanime.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -61,12 +60,6 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         navView.setCheckedItem(R.id.nav_home)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.main, menu)
-        return true
     }
 
     override fun onSupportNavigateUp(): Boolean {

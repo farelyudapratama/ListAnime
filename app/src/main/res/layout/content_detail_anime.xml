@@ -33,13 +33,14 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:gravity="center"
+                    android:paddingStart="1dp"
                     android:paddingEnd="8dp">
 
                     <TextView
                         android:id="@+id/tv_score_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="SCORE"
+                        android:text="@string/score"
                         android:textStyle="bold"
                         android:textSize="12sp"/>
 
@@ -47,7 +48,7 @@
                         android:id="@+id/tv_score_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="N/A"
+                        android:text="@string/n_a_score"
                         android:textStyle="bold"
                         android:textSize="16sp"/>
                 </LinearLayout>
@@ -72,7 +73,7 @@
                             android:id="@+id/tv_ranked"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Ranked N/A"
+                            android:text="@string/ranked_n_a"
                             android:textSize="12sp"
                             android:layout_marginTop="1dp"
                             android:layout_marginEnd="8dp"/>
@@ -81,7 +82,7 @@
                             android:id="@+id/tv_popularity"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Popularity #N/A"
+                            android:text="@string/popularity_n_a"
                             android:textSize="12sp"
                             android:layout_marginTop="1dp"
                             android:layout_marginEnd="8dp"/>
@@ -90,7 +91,7 @@
                             android:id="@+id/tv_members"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Members N/A"
+                            android:text="@string/members_n_a"
                             android:layout_marginTop="1dp"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -104,7 +105,7 @@
                             android:id="@+id/tv_season"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="null"
+                            android:text="@string/season_null"
                             android:textSize="12sp"
                             android:layout_marginEnd="8dp"/>
 
@@ -118,7 +119,7 @@
                             android:id="@+id/tv_type"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="null"
+                            android:text="@string/type_null"
                             android:textSize="12sp"
                             android:layout_marginEnd="8dp"
                             android:layout_marginBottom="1dp"/>
@@ -134,7 +135,7 @@
                             android:id="@+id/tv_studio"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="null"
+                            android:text="@string/studio_null"
                             android:textSize="12sp"
                             android:layout_marginBottom="1dp"/>
                     </LinearLayout>
@@ -158,7 +159,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:text="Information"
+                    android:text="@string/information"
                     android:textSize="22sp"
                     android:textStyle="bold" />
 
@@ -178,7 +179,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"
             android:layout_marginTop="10dp"
-            android:text="Synopsis"
+            android:text="@string/synopsis"
             android:textSize="22sp"
             android:textStyle="bold"/>
         <View
@@ -194,7 +195,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"
             android:layout_marginTop="10dp"
-            android:text="Text Synopsis"/>
+            android:text="@string/text_synopsis"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -202,7 +203,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"
             android:layout_marginTop="10dp"
-            android:text="Background"
+            android:text="@string/background"
             android:textSize="22sp"
             android:textStyle="bold"/>
         <View
@@ -219,6 +220,6 @@
             android:layout_marginEnd="12dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:text="Text Background"/>
+            android:text="@string/text_background"/>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

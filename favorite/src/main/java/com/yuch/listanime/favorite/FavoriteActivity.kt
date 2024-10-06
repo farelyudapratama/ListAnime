@@ -2,15 +2,9 @@ package com.yuch.listanime.favorite
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.yuch.listanime.core.Resource
-import com.yuch.listanime.core.domain.model.Anime
 import com.yuch.listanime.core.ui.AnimeAdapter
 import com.yuch.listanime.detail.DetailAnimeActivity
 import com.yuch.listanime.favorite.databinding.ActivityFavoriteBinding

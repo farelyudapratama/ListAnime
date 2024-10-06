@@ -41,7 +41,10 @@ class AnimeRepository(
                 localDataSource.insertAnime(updatedAnimeList)
             }
 
-            override fun shouldFetch(data: List<Anime>?): Boolean = true
+            override fun shouldFetch(data: List<Anime>?): Boolean {
+                return data.isNullOrEmpty()
+            }
+
         }.asFlow()
 
     override fun getFavoriteAnime(): Flow<List<Anime>> {
